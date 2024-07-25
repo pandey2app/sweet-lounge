@@ -1,0 +1,11 @@
+
+.header{
+    background-color: #58212144;
+}
+.rag-red {
+    background-color: #cc222244;
+}
+.row{
+    display: flex;
+    align-items: center
+}

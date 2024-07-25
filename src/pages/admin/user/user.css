@@ -1,0 +1,14 @@
+
+.header{
+    background-color: #58212144;
+}
+.rag-red {
+    background-color: #cc222244;
+}
+.rag-remove-red {
+    background-color: white;
+}
+.row{
+    display: flex;
+    align-items: center
+}
