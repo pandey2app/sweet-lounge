@@ -52,7 +52,7 @@ const Register = () => {
                     </Typography>
                 </Toolbar>
             </AppBar>
-            <div className="container px-5 w-1/2 py-10 mx-auto">
+            <div className="container px-5 md:w-1/2 py-10 mx-auto">
                 <h3 className='py-3 mb-4 font-mono text-2xl md:text-3xl text-center font-bold text-red-600 bg-orange-300'>Register</h3>
                 <div className="flex flex-wrap mb-10 shadow-md height-auto text-center">
                     <div className="w-full px-4">
