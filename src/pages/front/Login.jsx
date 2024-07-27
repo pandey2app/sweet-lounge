@@ -1,5 +1,5 @@
 import { LockOpen, AccountCircle } from '@mui/icons-material'
-import { AppBar, Button, IconButton, TextField, Toolbar, Typography } from '@mui/material'
+import { AppBar, Button, IconButton, InputAdornment, TextField, Toolbar, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useFormData } from '../../hooks/useFormData'
@@ -35,7 +35,7 @@ const Login = () => {
         } catch (error) {
             const newErrors = {}
             if (error.name === 'FirebaseError') {
-                newErrors.email = 'Email or password is not valid'
+                newErrors.credential = 'Email or password is not valid'
             } else {
                 error.inner.forEach(err => {
                     newErrors[err.path] = err.message
@@ -75,7 +75,12 @@ const Login = () => {
                                     name='email'
                                     value={formData.email}
                                     onChange={inputChange}
-                                    InputProps={{ startAdornment: <AccountCircle position="start" /> }}
+                                    InputProps={{ startAdornment: (
+                                        <InputAdornment position="start">
+                                            <AccountCircle style={{ marginRight: 8 }} />
+                                        </InputAdornment>
+                                    ) }}
+                                    className=''
                                 />
                                 {errors.email && <p className='text-red-700 text-sm font-semibold text-left'>*{errors.email}</p>}
                             </div>
@@ -88,10 +93,15 @@ const Login = () => {
                                     name='password'
                                     value={formData.password}
                                     onChange={inputChange}
-                                    InputProps={{ startAdornment: <LockOpen position="start" /> }}
+                                    InputProps={{ startAdornment: (
+                                        <InputAdornment position="start">
+                                            <LockOpen style={{ marginRight: 8 }} />
+                                        </InputAdornment>
+                                    ) }}
                                 />
                                 {errors.password && <p className='text-red-700 text-sm font-semibold text-left'>*{errors.password}</p>}
                             </div>
+                            {errors.credential && <p className='text-red-700 md:text-lg text-sm font-semibold text-center'>*{errors.credential}</p>}
                             <Button type='submit' variant='contained' endIcon={<LockOpen />}>Login</Button>
                         </form>
                         <div className='py-4 '>

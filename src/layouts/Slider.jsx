@@ -9,7 +9,7 @@ import slider5 from '../images/cakeSliderProtrait5.jpg'
 import slider6 from '../images/cakeSliderProtrait6.jpg'
 import { Typewriter } from 'react-simple-typewriter';
 import { CakeSharp, PinDrop } from '@mui/icons-material';
-import { Button } from '@mui/material';
+import ResponsiveButton from '../components/ResponsiveButton';
 
 
 const Slider = () => {
@@ -52,13 +52,8 @@ const Slider = () => {
                         </div>
 
                         <div className="flex lg:w-5/12 w-full gap-2 justify-between ">
-                            <Button variant='contained' endIcon={<CakeSharp />}>
-                                Explore Now
-                            </Button>
-                            <Button variant='contained' endIcon={<PinDrop />}>
-                                Locate Outlet
-                            </Button>
-
+                            <ResponsiveButton name={'Explore Now'} variant='contained' endIcon={<CakeSharp />}/>
+                            <ResponsiveButton name={'Locate Outlet'} variant='contained' endIcon={<PinDrop />}/>
                         </div>
                     </div>
                     <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">

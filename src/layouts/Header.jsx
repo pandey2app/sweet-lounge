@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { signOut } from 'firebase/auth'
 import { auth } from '../firebaseConfig'
 import { logoutUserStart } from '../redux/actions/user.action'
+import ResponsiveButton from '../components/ResponsiveButton'
 
 
 const Header = () => {
@@ -40,7 +41,7 @@ const Header = () => {
             }, 1000)
 
         } catch (error) {
-            
+
         }
     }
     return (
@@ -74,19 +75,17 @@ const Header = () => {
                     <nav className="md:ml-auto flex-wrap items-center  text-base justify-center hidden lg:flex">
                         <div className='me-2'><SplitButton name='Outlets' options={['VM field', 'Post Office', 'Janak super']} /></div>
                         <div className='me-2'><SplitButton name='Products' options={['Cakes', 'Icecreames', 'Chocolates']} /></div>
-                        <div className='me-2'><Button variant='contained' >Orders</Button></div>
-                        <div className='me-2'><Button onClick={() => navigate('/contact-us')} variant='contained' >ContactUs</Button></div>
+                        {
+                         currentUser.name &&   <div className='me-2'><ResponsiveButton name='Orders' variant='contained' /></div>
+                        }
+                        <div className='me-2'><ResponsiveButton name='Contact Us' onClick={() => navigate('/contact-us')} variant='contained' /></div>
                     </nav>
-                    <div className=' md:mt-0 ms-2 flex items-center'>
+                    <div className=' md:mt-0 ms-2 h-10 flex items-center'>
                         {!currentUser.name && path !== '/login' &&
-                            <Button variant='contained' endIcon={<Login />} onClick={() => navigate('login')} className="border-0 py-1 px-3 h-8 focus:shadow-sm rounded text-base ">
-                                Login
-                            </Button>
+                            <ResponsiveButton name='Login' variant='contained' endIcon={<Login />} onClick={() => navigate('login')} className="border-0 py-1 px-3 focus:shadow-sm rounded " />
                         }
                         {currentUser.name &&
-                            <Button variant='contained' endIcon={<ExitToApp />} onClick={logoutHandler} className="border-0 py-1 px-3 h-8 focus:shadow-sm rounded text-base ">
-                                Logout
-                            </Button>
+                            <ResponsiveButton name='Logout' variant='contained' endIcon={<ExitToApp />} onClick={logoutHandler} className="border-0 py-1 px-3 focus:shadow-sm rounded" />
                         }
                     </div>
                 </div>
