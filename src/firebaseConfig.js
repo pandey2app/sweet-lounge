@@ -7,6 +7,8 @@ import { getStorage } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 
 console.log(process.env);
+console.log(process.env.FIREBASE_API_KEY);
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBI_vIya6pwRkdF1EOE0OzE4hiC5mGR0QU",
