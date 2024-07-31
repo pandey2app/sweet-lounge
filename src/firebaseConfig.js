@@ -6,17 +6,14 @@ import {getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 
-console.log(process.env);
-console.log(process.env.REACT_APP_VERCEL_FIREBASE_API_KEY);
-
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_VERCEL_FIREBASE_API_KEY,
-  authDomain: "sweetloungeapp.firebaseapp.com",
-  projectId: "sweetloungeapp",
-  storageBucket: "sweetloungeapp.appspot.com",
-  messagingSenderId: "78310012732",
-  appId: "1:78310012732:web:c8f86049d6d2c7c7469039"
+  authDomain: process.env.REACT_APP_VERCEL_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_VERCEL_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_VERCEL_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_VERCEL_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_VERCEL_FIREBASE_API_ID
 };
 
 // Initialize Firebase
