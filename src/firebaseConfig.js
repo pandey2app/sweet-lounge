@@ -7,11 +7,11 @@ import { getStorage } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 
 console.log(process.env);
-console.log(process.env.FIREBASE_API_KEY);
+console.log(process.env.REACT_APP_VERCEL_FIREBASE_API_KEY);
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBI_vIya6pwRkdF1EOE0OzE4hiC5mGR0QU",
+  apiKey: process.env.REACT_APP_VERCEL_FIREBASE_API_KEY,
   authDomain: "sweetloungeapp.firebaseapp.com",
   projectId: "sweetloungeapp",
   storageBucket: "sweetloungeapp.appspot.com",
