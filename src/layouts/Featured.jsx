@@ -1,15 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button } from '@mui/material'
 import { AddShoppingCart, KeyboardArrowRight } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useCart } from '../hooks/useCart'
+import { getProductStart } from '../redux/actions/product.action'
 
 
 
 const Featured = () => {
+  const dispatch = useDispatch()
   const products = useSelector(state => state.product.products)?.slice(0,8)
   const [, addTocart] = useCart()
+
+  useEffect(()=>{
+    dispatch(getProductStart())
+  },[])
   
   return (
     <>
