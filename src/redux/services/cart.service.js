@@ -1,24 +1,30 @@
 import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../../firebaseConfig';
 
-const collectionName = "carts"
+const collectionName = "cart"
 
 export const getCartFromAPI = async () => {
-    const carts = []
+    let cart = {}
     const querySnapshot = await getDocs(collection(db, collectionName));
 
     querySnapshot.forEach((doc) => {
-        let cart = doc.data()
+        cart = doc.data()
         cart.id = doc.id
-        carts.push(cart)
     });
 
-    return carts
+    return cart
 }
 
 export const addCartToAPI = async (cart) => {
-    const docRef = await addDoc(collection(db, collectionName), cart);
-    console.log("Document written with ID: ", docRef.id);
+    const currentCart = localStorage.getItem("currentCart")
+    if (!currentCart) {
+        const docRef = await addDoc(collection(db, collectionName), cart);
+        localStorage.setItem("currentCart", docRef.id)
+        console.log("Document written with ID: ", docRef.id);
+    } else {
+        const cartRef = doc(db, collectionName, cart.id);
+        await updateDoc(cartRef, cart)
+    }
 }
 
 export const updateCartToAPI = async (cart, id) => {

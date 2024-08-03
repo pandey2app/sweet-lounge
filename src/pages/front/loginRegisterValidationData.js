@@ -5,6 +5,7 @@ export const registerValidationSchema = Yup.object({
     email: Yup.string().email('Invalid email format').required('Please enter your email'),
     phone: Yup.string().required('Please enter your phone number')
         .matches(/^[0-9]{10}$/, "Mobile number should have ten digits"),
+    userType: Yup.string().required('please provide user type'),
     password: Yup.string()
         .required('Please enter your password')
         .min(8, 'Password must be at least 8 characters')
@@ -21,6 +22,7 @@ export const registerInitialState = {
     name: '',
     email: '',
     phone: '',
+    userType: 'user',
     password: '',
     confirmPassword: '',
 };

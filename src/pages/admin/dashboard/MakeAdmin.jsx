@@ -1,31 +1,53 @@
-import { Lock, AccountCircle, Email, Phone } from '@mui/icons-material'
+import { Lock, AccountCircle, Email, Phone, SupervisedUserCircle } from '@mui/icons-material'
 import { AppBar, Button, IconButton, TextField, Toolbar, Typography } from '@mui/material'
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { useFormData } from '../../hooks/useFormData'
-import { registerInitialState, registerValidationSchema } from './loginRegisterValidationData'
-import { auth } from '../../firebaseConfig'
+import React, { useCallback, useEffect, useState } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { useFormData } from '../../../hooks/useFormData'
+import { registerInitialState, registerValidationSchema } from '../../front/loginRegisterValidationData'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { useDispatch } from 'react-redux'
-import { addUserStart } from '../../redux/actions/user.action'
+import { auth } from '../../../firebaseConfig'
+import { addUserStart, updateUserStart } from '../../../redux/actions/user.action'
 
-const Register = () => {
+const MakeAdmin = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const [formData, , , inputChange] = useFormData(registerInitialState, 'product')
+    const users = useSelector((state) => state.user.users)
+    const [formData, , setFormData, inputChange] = useFormData(registerInitialState, 'product')
+    const { id } = useParams()
     const [errors, setErrors] = useState({})
 
+    const searchUserById = useCallback((id) => {
+        let user = users.find((u) => u.id === id)
+        setFormData({
+            ...user,
+            userType: 'admin'
+        })
+    }, [setFormData, users])
+
+    useEffect(() => {
+        if (id) {
+            searchUserById(id)
+        } else {
+            setFormData({ ...registerInitialState })
+        }
+    }, [searchUserById, setFormData, id])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
             await registerValidationSchema.validate(formData, { abortEarly: false })
-            const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password)
-
-            formData.uid = userCredential.user.uid
-            dispatch(addUserStart(formData));
+            if (id) {
+                dispatch(updateUserStart(formData, id));
+            } else {
+                const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password)
+                formData.uid = userCredential.user.uid
+                formData.userType = 'admin'
+                console.log(formData);
+                dispatch(addUserStart(formData))
+            }
             setTimeout(() => {
-              navigate('/login')
+                navigate('/admin/user')
             }, 1000)
         } catch (error) {
             const newErrors = {}
@@ -66,7 +88,7 @@ const Register = () => {
                                     type='text'
                                     value={formData.name}
                                     onChange={inputChange}
-                                    InputProps={{ startAdornment: <AccountCircle position="start" style={{ marginRight: 8 }}/> }}
+                                    InputProps={{ startAdornment: <AccountCircle position="start" style={{ marginRight: 8 }} /> }}
                                 />
                                 {errors.name && <p className='text-red-700 text-sm font-semibold text-left'>*{errors.name}</p>}
                             </div>
@@ -79,7 +101,7 @@ const Register = () => {
                                     type='email'
                                     value={formData.email}
                                     onChange={inputChange}
-                                    InputProps={{ startAdornment: <Email position="start" style={{ marginRight: 8 }}/> }}
+                                    InputProps={{ startAdornment: <Email position="start" style={{ marginRight: 8 }} /> }}
                                 />
                                 {errors.email && <p className='text-red-700 text-sm font-semibold text-left'>*{errors.email}</p>}
                             </div>
@@ -95,7 +117,21 @@ const Register = () => {
                                     InputProps={{ startAdornment: <Phone position="start" style={{ marginRight: 8 }} /> }}
                                 />
                                 {errors.phone && <p className='text-red-700 text-sm font-semibold text-left'>*{errors.phone}</p>}
-                            </div>                            
+                            </div>
+                            <div>
+                                <TextField
+                                    label="User Type"
+                                    variant="outlined"
+                                    fullWidth
+                                    name='userType'
+                                    type='text'
+                                    value={'Admin'}
+                                    aria-readonly
+                                    InputProps={{ startAdornment: <SupervisedUserCircle position="start" style={{ marginRight: 8 }} /> }}
+                                />
+                                {errors.userType && <p className='text-red-700 text-sm font-semibold text-left'>*{errors.userType}</p>}
+                            </div>
+
                             <div>
                                 <TextField
                                     label="Password"
@@ -105,7 +141,7 @@ const Register = () => {
                                     name='password'
                                     value={formData.password}
                                     onChange={inputChange}
-                                    InputProps={{ startAdornment: <Lock position="start" style={{ marginRight: 8 }}/> }}
+                                    InputProps={{ startAdornment: <Lock position="start" style={{ marginRight: 8 }} /> }}
                                 />
                                 {errors.password && <p className='text-red-700 text-sm font-semibold text-left'>*{errors.password}</p>}
                             </div>
@@ -118,7 +154,7 @@ const Register = () => {
                                     name='confirmPassword'
                                     value={formData.confirmPassword}
                                     onChange={inputChange}
-                                    InputProps={{ startAdornment: <Lock position="start" style={{ marginRight: 8 }}/> }}
+                                    InputProps={{ startAdornment: <Lock position="start" style={{ marginRight: 8 }} /> }}
                                 />
                                 {errors.confirmPassword && <p className='text-red-700 text-sm font-semibold text-left'>*{errors.confirmPassword}</p>}
                             </div>
@@ -134,4 +170,4 @@ const Register = () => {
     )
 }
 
-export default Register
+export default MakeAdmin

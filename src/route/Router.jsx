@@ -24,9 +24,10 @@ import Products from '../pages/front/Products'
 import Outlets from '../pages/front/Outlets'
 import ContactUs from '../pages/front/ContactUs'
 import NotFound from '../pages/front/NotFound'
-import OverView from '../pages/admin/dashboard/OverView'
 import Profile from '../pages/admin/Profile'
 import PasswordEdit from '../pages/admin/dashboard/PasswordEdit'
+import MakeAdmin from '../pages/admin/dashboard/MakeAdmin'
+import ConfirmIdentity from '../pages/admin/ConfirmIdentity'
 
 const Router = () => {
     return (
@@ -75,9 +76,6 @@ const Router = () => {
                 <Route path='edit-password' element={<PasswordEdit />} />
 
 
-                {/* Overview Page */}
-                <Route path='overview' element={<OverView />} />
-
                 {/* Order pages */}
                 <Route path='order'>
                     {/* Order list page */}
@@ -122,6 +120,15 @@ const Router = () => {
 
                     {/* user edit page */}
                     <Route path='edit/:id' element={<EditUser />} />
+
+                    {/* make admin page */}
+                    <Route path='confirm-id' element={<ConfirmIdentity />} />
+
+                    {/* make admin page */}
+                    <Route path='make-admin/:id' element={<MakeAdmin />} />
+
+                    {/* add admin page */}
+                    <Route path='add-admin' element={<MakeAdmin />} />
                 </Route>
             </Route>
             <Route path='*' element={<NotFound />} />

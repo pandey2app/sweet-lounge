@@ -8,9 +8,9 @@ import { useCart } from '../hooks/useCart'
 
 
 const Featured = () => {
-  const products = useSelector(state => state.product.products)
-  const [cart, addTocart] = useCart()
-
+  const products = useSelector(state => state.product.products)?.slice(0,8)
+  const [, addTocart] = useCart()
+  
   return (
     <>
       <section className="text-gray-600 bg-orange-200 body-font">

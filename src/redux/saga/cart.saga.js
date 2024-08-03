@@ -5,14 +5,16 @@ import { addCartError, deleteCartError, getCartError, getCartStart, getCartSucce
 
 function* getCart(){
     try {
-        let carts = yield getCartFromAPI()
-        yield put(getCartSuccess(carts))
+        let cart = yield getCartFromAPI()
+        yield put(getCartSuccess(cart))
     } catch (error) {
         yield put(getCartError(error.message))
     }
 }
 
 function* addCart({payload}){
+    console.log(payload);
+    
     try {
         yield addCartToAPI(payload)
         yield put(getCartStart())

@@ -13,23 +13,23 @@ export const usersCol = [
     {
         field: "role", flex: 0.8, filter: true, floatingFilter: true,
     },
-    { field: "joined", headerName: 'joined', flex: 1, filter: true, floatingFilter: true },
+    { field: "joined", headerName: 'joined', flex: 0.8, filter: true, floatingFilter: true },
     { field: "mobile", headerName: 'Contact no', flex: 1, filter: true, floatingFilter: true },
-    { field: "email", headerName: 'Email ID', flex: 1, filter: true, floatingFilter: true },
+    { field: "email", headerName: 'Email ID', flex: 1.4, filter: true, floatingFilter: true },
 
-    { field: "working", flex: 0.6, filter: true, floatingFilter: true },
+    { field: "working", flex: 0.4, filter: true, floatingFilter: true },
     { field: "salary", flex: 0.6, filter: true, floatingFilter: true },
     { field: "address", flex: 0.6, filter: true, floatingFilter: true },
 
     {
-        field: "edit", flex: 0.5,
+        field: "edit", flex: 0.7,
         cellRenderer: ({ data }) => {
             return <TableButton id={data.id} name='edit' color='warning' caller='user' />
         },
 
     },
     {
-        field: "delete", flex: 0.5,
+        field: "delete", flex: 0.7,
         cellRenderer: ({ data }) => {
             return <TableButton id={data.id} name='delete' color='error' caller='user' />
         },

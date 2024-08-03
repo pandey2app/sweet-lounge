@@ -45,6 +45,7 @@ const User = () => {
         <h3 className='py-3 mb-4 w-full font-mono text-2xl md:text-5xl text-center font-bold text-red-600 bg-orange-300'>Users</h3>
         <div className='absolute top-2 flex gap-2 md:top-4 right-4'>
           <Button variant='contained' onClick={() => navigate('/admin/user/add')} endIcon={<Add />} className=''>Add User</Button>
+          <Button variant='contained' onClick={() => navigate('/admin/user/confirm-id')} endIcon={<Add />} className=''>Add Admin</Button>
           <Button variant='contained' onClick={() => navigate('/admin/dashboard')} endIcon={<Dashboard />} className=''>Dashboard</Button>
         </div>
       </div>
@@ -62,6 +63,7 @@ const User = () => {
           rowClassRules={rowClassRules}
           rowClass={'row'}
           rowHeight={80}
+          embedFullWidthRows
         />
       </div>
     </>

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import logo from '../images/SLlogo.png'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import SplitButton from '../components/SplitButton'
 import { Button } from '@mui/material'
 import { ExitToApp, Launch, Login } from '@mui/icons-material'
@@ -14,7 +14,8 @@ import ResponsiveButton from '../components/ResponsiveButton'
 
 const Header = () => {
     const currentUser = useSelector((state) => state.user.currentUser)
-    const path = window.location.pathname
+    const { pathname } = useLocation()
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const mobileNavbar = useRef()
@@ -73,15 +74,28 @@ const Header = () => {
                         <NavLink to={'/'} onClick={() => { navbarCloser() }} className=" text-amber-500 text-xl font-serif md:text-6xl md:ms-9"><span className='text-red-700 font-extrabold inline-block'>Sweet</span> <sub className='text-blue-700 font-extrabold ms-2 inline-block'>Lounge</sub></NavLink>
                     </div>
                     <nav className="md:ml-auto flex-wrap items-center  text-base justify-center hidden lg:flex">
-                        <div className='me-2'><SplitButton name='Outlets' options={['VM field', 'Post Office', 'Janak super']} /></div>
-                        <div className='me-2'><SplitButton name='Products' options={['Cakes', 'Icecreames', 'Chocolates']} /></div>
                         {
-                         currentUser.name &&   <div className='me-2'><ResponsiveButton name='Orders' variant='contained' /></div>
+                            currentUser.userType?.toLowerCase() !== 'admin' && pathname !== '/admin/dashboard' &&
+                                <div className='me-2'><SplitButton name='Outlets' options={['VM field', 'Post Office', 'Janak super']} /></div>
                         }
-                        <div className='me-2'><ResponsiveButton name='Contact Us' onClick={() => navigate('/contact-us')} variant='contained' /></div>
+                        {
+                            currentUser.userType?.toLowerCase() !== 'admin' && pathname !== '/admin/dashboard' &&
+                                <div className='me-2'><SplitButton name='Products' options={['Cakes', 'Icecreames', 'Chocolates']} /></div>
+                        }
+                        {
+                            currentUser.name && currentUser.userType?.toLowerCase() !== 'admin' && <div className='me-2'><ResponsiveButton name='Orders' variant='contained' /></div>
+                        }
+                        {
+                            currentUser.userType?.toLowerCase() === 'admin' && pathname !== '/admin/dashboard' ?
+                                <div className='me-2'><ResponsiveButton name='Dashboard' onClick={() => navigate('/admin/dashboard')} variant='contained' /></div> : ''
+                        }
+                        {
+                            currentUser.userType?.toLowerCase() !== 'admin' ?
+                                <div className='me-2'><ResponsiveButton name='Contact Us' onClick={() => navigate('/contact-us')} variant='contained' /></div> : ''
+                        }
                     </nav>
                     <div className=' md:mt-0 ms-2 h-10 flex items-center'>
-                        {!currentUser.name && path !== '/login' &&
+                        {!currentUser.name && pathname !== '/login' &&
                             <ResponsiveButton name='Login' variant='contained' endIcon={<Login />} onClick={() => navigate('login')} className="border-0 py-1 px-3 focus:shadow-sm rounded " />
                         }
                         {currentUser.name &&

@@ -20,6 +20,7 @@ export const userReducer = (state = initialState, action )=>{
         }
         case LOGOUT_USER_SUCCESS: 
         localStorage.removeItem("currentUser")
+        localStorage.removeItem('currentCart')
         return{
             ...state,
             currentUser: {}
